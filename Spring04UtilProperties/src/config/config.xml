@@ -21,7 +21,7 @@
 	 -->
 	<bean id="mybean" class="bean.MyBean">
 		<constructor-arg value="Good night"></constructor-arg>
-		<property name="greeting" value="#{str.kor}"></property>
+		<property name="greeting" value="#{str.kor}"></property> <!-- setGreeting setter에 클래스 정보 저장 -->
 	</bean>
 
 </beans>
