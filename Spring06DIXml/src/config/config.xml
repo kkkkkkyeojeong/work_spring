@@ -11,6 +11,10 @@
 	default-autowire는 beans 앨리먼트에 속해있는 모든 bean 앨리먼트의 autowire 속성값을 일괄 적용할 때 사용
 	
 	beans 앨리먼트의 default-autowire의 기본값은 no 이다. 
+	
+	autowire -> 클래스에서 다른 클래스의 객체를 생성하고 사용하기 위해서 사용
+	property -> 클래스 setter 값을 설정해주기 위해서 사용
+	
 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
