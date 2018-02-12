@@ -8,3 +8,7 @@ CREATE TABLE job (
 );
 
 SELECT * FROM job;
+
+show tables;
+
+select * from board;

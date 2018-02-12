@@ -16,7 +16,7 @@ public class EmployeeDao {
 	public Employee getEmployee(int empno){
 		SqlSession session = factory.openSession();
 		Employee emp = session.selectOne("com.koitt.model.Employee.select", empno);
-		session.close();
+		session.close();				// <mapper namespace="com.koitt.model.Employee">
 		
 		return emp;
 	}
