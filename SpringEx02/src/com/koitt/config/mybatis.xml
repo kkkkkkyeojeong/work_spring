@@ -11,6 +11,8 @@
   
   Under Score : hello_world
   Camel 표기법  (Camel Case) : helloWorld
+  niceToMeetYou
+  nice_to_meet_you
    -->
   
   <!-- mapper의 위치 지정 -->
@@ -22,4 +24,5 @@
   		<mapper resource="com/koitt/config/mapper.xml"/>
   	</mappers>
   </configuration>
+  
   
