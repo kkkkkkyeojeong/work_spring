@@ -3,16 +3,16 @@ package model;
 public class Job {
 	
 	private String jobId;
-	private String jobtitle;
+	private String jobTitle;
 	private Integer minSalary;
 	private Integer maxSalary;
 	
 	public Job() {}
 
-	public Job(String jobId, String jobtitle, Integer minSalary, Integer maxSalary) {
+	public Job(String jobId, String jobTitle, Integer minSalary, Integer maxSalary) {
 		super();
 		this.jobId = jobId;
-		this.jobtitle = jobtitle;
+		this.jobTitle = jobTitle;
 		this.minSalary = minSalary;
 		this.maxSalary = maxSalary;
 	}
@@ -26,11 +26,11 @@ public class Job {
 	}
 
 	public String getJobTitle() {
-		return jobtitle;
+		return jobTitle;
 	}
 
-	public void setJobTitle(String jobtitle) {
-		this.jobtitle = jobtitle;
+	public void setJobTitle(String jobTitle) {
+		this.jobTitle = jobTitle;
 	}
 
 	public Integer getMinSalary() {
@@ -55,7 +55,7 @@ public class Job {
 		builder.append("Job [jobId=");
 		builder.append(jobId);
 		builder.append(", jobtitle=");
-		builder.append(jobtitle);
+		builder.append(jobTitle);
 		builder.append(", minSalary=");
 		builder.append(minSalary);
 		builder.append(", maxSalary=");
