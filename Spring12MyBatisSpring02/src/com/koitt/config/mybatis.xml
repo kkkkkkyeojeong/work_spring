@@ -13,15 +13,19 @@
    -->
   
   <configuration>
+  
   	<settings>
   		<setting name="jdbcTypeForNull" value="NULL" />
   		<setting name="mapUnderscoreToCamelCase" value="true" />
   	</settings>	
+  	
   	<typeAliases>
   		<typeAlias type="com.koitt.model.Pet" alias="Pet" />
   	</typeAliases>
+  	
   	<mappers>
   		<mapper resource="com/koitt/config/mapper.xml"/>
   	</mappers>
+  	
   </configuration>
   
