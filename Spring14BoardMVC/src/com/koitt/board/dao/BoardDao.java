@@ -17,10 +17,10 @@ public interface BoardDao {
 	public List<Board> selectAll() throws BoardException;
 	
 	// 게시글 개수 가져오기
-	public int boardCounr();
+	public int boardCount();
 	
 	// 글 수정하기
-	public void update(Board board);
+	public void update(Board board) throws BoardException;
 	
 	// 글 삭제하기
 	public void delete(String no) throws BoardException;
