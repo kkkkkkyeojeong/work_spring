@@ -21,7 +21,7 @@
 		</div>
 		<div>
 			<label>내용</label>
-			<textarea name="content"></textarea>
+			<textarea name="description"></textarea>
 		</div>
 		
 		<input type="submit" value="도서 작성">
