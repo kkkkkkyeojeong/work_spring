@@ -23,7 +23,7 @@ public interface BoardService {
 	public void modify(Board board);
 	
 	// 글 삭제하기
-	public void remove(String no);
+	public void remove(String no) throws BoardException;
 	
 	
 }
