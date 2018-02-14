@@ -6,9 +6,12 @@ import com.koitt.board.model.Board;
 import com.koitt.board.model.BoardException;
 
 public interface BoardService {
+	
+	// 글 추가하기
+	public void add(Board board) throws BoardException;
 
 	// 글 상세보기
-	public Board detail(String no);
+	public Board detail(String no) throws BoardException;
 	
 	// 글 전체
 	public List<Board> list() throws BoardException;

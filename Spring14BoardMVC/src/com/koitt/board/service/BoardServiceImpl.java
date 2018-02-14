@@ -18,9 +18,13 @@ public class BoardServiceImpl implements BoardService{
 	public BoardServiceImpl() {}
 	
 	@Override
-	public Board detail(String no) {
-		// TODO Auto-generated method stub
-		return null;
+	public void add(Board board) throws BoardException {
+		dao.insert(board);
+	}
+	
+	@Override
+	public Board detail(String no) throws BoardException {
+		return dao.select(no);
 	}
 
 	@Override
