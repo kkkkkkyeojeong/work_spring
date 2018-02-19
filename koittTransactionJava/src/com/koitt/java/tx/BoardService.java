@@ -6,7 +6,7 @@ public class BoardService {
 	
 	private BoardDao dao = new BoardDao();
 	/*
-	 * 롤백(roll back) : SQL문 실행 전 상태로 되돌리는 것
+	 * 롤백(roll back) : SQL문 실행 전 상태로 되돌리는 것 (drop-삭제, alter-테이블변경은 적용되지 않는다)
 	 * 트랜젝션(Transaction) : 여러개의 SQL문을 하나의 작업단위로 묶은 것
 	 * 트랜젝션 처리 한다는 것 : 여러개의 SQL문을 하나의 작업단위로 묶었는데 그 여러개 SQL문 중 하나에 문제가 발생한다면 
 	 * 					롤백을 호출하여 이전 상태로 되돌리도록 처리하는 것을 의미
