@@ -2,6 +2,7 @@ package com.koitt.board.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,21 +14,20 @@ import com.koitt.board.model.BoardException;
 @Repository
 public class BoardDaoImpl implements BoardDao{
 
+	private static final String MAPPER_NS = Board.class.getName();
+	
 	@Autowired
-	private JdbcTemplate template;
+	private SqlSession session;
 	
 	public BoardDaoImpl() {}
 	
 	@Override
 	public void insert(Board board) throws BoardException {
 		try {
-			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO board (title, content, user_no, regdate) ");
-			sql.append("VALUES (?, ?, ?, CURDATE()) ");
-			
-			template.update(sql.toString(), board.getTitle(), board.getContent(), board.getUserNo());
+			session.insert(MAPPER_NS + ".insert-board", board);
 			
 		} catch(Exception e) {
+			System.out.println(e.getMessage());
 			throw new BoardException(e.getMessage());
 		}
 	}
@@ -37,10 +37,10 @@ public class BoardDaoImpl implements BoardDao{
 		Board board = null;
 		
 		try {
-			String sql = "SELECT * FROM board WHERE no = ?";
-			board = template.queryForObject(sql, new BeanPropertyRowMapper<Board>(Board.class), no);
-		
+			board = session.selectOne(MAPPER_NS + ".select-board", no);
+			
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			throw new BoardException(e.getMessage());
 		}
 		return board;
@@ -52,10 +52,10 @@ public class BoardDaoImpl implements BoardDao{
 		
 		// BeanPropertyRowMapper<Board>: 자동으로 필드와 컬럼을 연결시켜준다
 		try {
-			String sql = "SELECT * FROM board ORDER BY no DESC";
-			list = template.query(sql, new BeanPropertyRowMapper<Board>(Board.class));
+			list = session.selectList(MAPPER_NS + ".selectAll-board");
 			
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			throw new BoardException(e.getMessage());
 		}
 		
@@ -67,10 +67,10 @@ public class BoardDaoImpl implements BoardDao{
 		Integer result = null;
 		
 		try {
-			String sql = "SELECT COUNT(*) cnt FROM board";
-			result = template.queryForObject(sql, Integer.class);
+			result = session.selectOne(MAPPER_NS + ".selectCount-board");
 			
 		} catch(Exception e) {
+			System.out.println(e.getMessage());
 			throw new BoardException(e.getMessage());
 		}
 		
@@ -80,15 +80,10 @@ public class BoardDaoImpl implements BoardDao{
 	@Override
 	public void update(Board board) throws BoardException {
 		try {
-			StringBuilder sql = new StringBuilder();
-			sql.append("UPDATE board SET title = ?, ");
-			sql.append("content = ?, ");
-			sql.append("regdate = CURDATE() ");
-			sql.append("WHERE no = ?" );
-			
-			template.update(sql.toString(), board.getTitle(), board.getContent(), board.getNo());
+			session.update(MAPPER_NS + ".update-board", board);
 			
 		} catch(Exception e) {
+			System.out.println(e.getMessage());
 			throw new BoardException(e.getMessage());
 		}
 		
@@ -97,10 +92,10 @@ public class BoardDaoImpl implements BoardDao{
 	@Override
 	public void delete(String no) throws BoardException {
 		try {
-			String sql = "DELETE FROM board WHERE no = ? ";
-			template.update(sql, no);
+			session.delete(MAPPER_NS + ".delete-board", no);
 			
 		} catch(Exception e) {
+			System.out.println(e.getMessage());
 			throw new BoardException(e.getMessage());
 		}
 		
