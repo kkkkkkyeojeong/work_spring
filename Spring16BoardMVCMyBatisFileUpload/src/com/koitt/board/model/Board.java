@@ -13,19 +13,22 @@ public class Board implements Serializable{ 	// 7. implements Serializable
 	private String content; // 글 내용
 	private Integer userNo;	// 사용자 번호
 	private Date regdate;	// 작성일 
+	private String attachment;	// 첨부파일명
 
 	// 1. 기본생성자
 	public Board() {}
 
 	// 2. 생성자(모든 필드 초기화)
-	public Board(Integer no, String title, String content,Integer userNo, Date regdate) {
+	public Board(Integer no, String title, String content, Integer userNo, Date regdate, String attachment) {
 		super();
 		this.no = no;
 		this.title = title;
 		this.content = content;
 		this.userNo = userNo;
 		this.regdate = regdate;
+		this.attachment = attachment;
 	}
+
 
 	// 3. getter, setter
 	public Integer getNo() {
@@ -67,7 +70,14 @@ public class Board implements Serializable{ 	// 7. implements Serializable
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
-	
+
+	public String getAttachment() {
+		return attachment;
+	}
+
+	public void setAttachment(String attachment) {
+		this.attachment = attachment;
+	}
 
 	// 4. HashCode
 	@Override
@@ -79,6 +89,7 @@ public class Board implements Serializable{ 	// 7. implements Serializable
 		result = prime * result + ((regdate == null) ? 0 : regdate.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		result = prime * result + ((userNo == null) ? 0 : userNo.hashCode());
+		result = prime * result + ((attachment == null) ? 0 : attachment.hashCode());
 		return result;
 	}
 
@@ -117,9 +128,14 @@ public class Board implements Serializable{ 	// 7. implements Serializable
 		builder.append(userNo);
 		builder.append(", regdate=");
 		builder.append(regdate);
+		builder.append(", attachment=");
+		builder.append(attachment);
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
+	
 
 	
 	
