@@ -20,7 +20,7 @@ public class BookController {
 	private BookService service;
 	
 	// 책 목록보기
-	@RequestMapping("/book-list.do")
+	@RequestMapping(value="/book-list.do", method=RequestMethod.GET)
 	public String list(Model model) {
 		List<Book> list = null;
 		
