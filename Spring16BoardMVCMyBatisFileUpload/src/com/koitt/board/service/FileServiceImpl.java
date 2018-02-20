@@ -173,22 +173,30 @@ public class FileServiceImpl implements FileService{
 	}
 
 	@Override
-	public String getImgPath(HttpServletRequest request, String filename) {
+	public String getImgPath(HttpServletRequest request, String filename) throws FileException {
 		// 컨텍스트 경로 가져오기 (localhost:8080/Spring16BoardMVCMyBatisFileUpload)
 		String contextPath = request.getContextPath();
 		
 		// 파일의 확장자 추출
-		if	(filename != null && !filename.trim().isEmpty()) {
-			int idx = filename.lastIndexOf(".");
-			String ext = filename.substring(idx, filename.length());
-			
-			// 만약 jpg 그림파일이면 파일 경로를 리턴 
-			switch(ext) {
-				case ".jpg":
-				case ".jpeg":
-				case ".png":
-					return contextPath + UPLOAD_FOLDER + "/" + filename;
+		try {
+			if	(filename != null && !filename.trim().isEmpty()) {
+				
+				// URL Encoding 된 파일명을 다시 Decoding 해서 포워딩 
+				filename = URLDecoder.decode(filename, "UTF-8");
+				
+				int idx = filename.lastIndexOf(".");
+				String ext = filename.substring(idx, filename.length());
+				
+				// 만약 jpg 그림파일이면 파일 경로를 리턴 
+				switch(ext) {
+					case ".jpg":
+					case ".jpeg":
+					case ".png":
+						return contextPath + UPLOAD_FOLDER + "/" + filename;
+				}
 			}
+		} catch (Exception e) {
+			throw new FileException(e.getMessage());
 		}
 		// 그림파일이 아니면 null 값 리턴
 		return null;
