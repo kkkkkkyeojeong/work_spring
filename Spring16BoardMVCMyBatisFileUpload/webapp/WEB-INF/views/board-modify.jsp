@@ -6,7 +6,7 @@
 </head>
 <body>
 	<h1>게시물 수정</h1>
-	<form action="board-modify.do" method="post">
+	<form action="board-modify.do" method="post" enctype="multipart/form-data">
 		<div>글 번호: ${ board.no }</div>
 		<div>작성자 번호: ${ board.userNo }</div>
 		<div>
@@ -15,6 +15,9 @@
 		<div>
 			<label>내용</label>
 			<textarea name="content">${ board.content }</textarea>
+		</div>
+		<div>
+			<label>첨부파일<input type="file" name="attachment"></label>
 		</div>
 		<input type="hidden" name="no" value="${ board.no }">
 		<input type="submit" value="글 수정">

@@ -25,7 +25,8 @@
  	<update id="update-board" parameterType="Board">
  		UPDATE board SET title = #{title}, 
 			content = #{content},
-			regdate = CURDATE()
+			regdate = CURDATE(),
+			attachment = #{attachment}
 			WHERE no = #{no}
  	</update>
  	
