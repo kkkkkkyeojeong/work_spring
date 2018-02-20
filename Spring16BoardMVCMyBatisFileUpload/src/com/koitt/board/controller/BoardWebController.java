@@ -131,11 +131,15 @@ public class BoardWebController {
 	
 	// 글 삭제 후, 글 목록 화면으로 이동
 	@RequestMapping(value="/board-remove.do", method=RequestMethod.POST)
-	public String remove(Model model, String no) {
+	public String remove(Model model, String no, HttpServletRequest request) {
 		try {
-			boardservice.remove(no);
+			String toDeleteFilename = boardservice.remove(no);
+			fileservice.remove(request, toDeleteFilename);
+			
 		} catch (BoardException e) {
 			model.addAttribute("error", "server");
+		} catch (FileException e) {
+			model.addAttribute("error", "file");
 		}
 		return "redirect:board-list.do";
 	}

@@ -37,3 +37,4 @@ INSERT INTO board (title, content, user_no, regdate, attachment)
 	
 #DQL(Data Query Language)
 SELECT * FROM board;
+SELECT * FROM users;

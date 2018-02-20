@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -146,7 +147,28 @@ public class FileServiceImpl implements FileService{
 	
 	
 	@Override
-	public void remove(HttpServletRequest request, String filename) throws FileException {
+	public void remove(HttpServletRequest request, String filename) throws FileException{
+		
+		String path = request.getServletContext().getRealPath(UPLOAD_FOLDER);
+		
+		if(filename != null && !filename.trim().isEmpty()) {
+			
+			try {
+				// filename 디코딩
+				filename = URLDecoder.decode(filename, "UTF-8");
+				
+			} catch(Exception e) {
+				throw new FileException(e.getMessage());
+			}
+			
+			// 서버에 저장된 파일을 불러와서 객체화 시킴 
+			File file = new File(path, filename);
+			
+			// 만약 파일이 존재하면 파일을 삭제한다
+			if(file.exists()) {
+				file.delete();
+			}
+		}
 
 	}
 
@@ -156,17 +178,18 @@ public class FileServiceImpl implements FileService{
 		String contextPath = request.getContextPath();
 		
 		// 파일의 확장자 추출
-		int idx = filename.lastIndexOf(".");
-		String ext = filename.substring(idx, filename.length());
-		
-		// 만약 jpg 그림파일이면 파일 경로를 리턴 
-		switch(ext) {
-			case ".jpg":
-			case ".jpeg":
-			case ".png":
-				return contextPath + UPLOAD_FOLDER + "/" + filename;
+		if	(filename != null && !filename.trim().isEmpty()) {
+			int idx = filename.lastIndexOf(".");
+			String ext = filename.substring(idx, filename.length());
+			
+			// 만약 jpg 그림파일이면 파일 경로를 리턴 
+			switch(ext) {
+				case ".jpg":
+				case ".jpeg":
+				case ".png":
+					return contextPath + UPLOAD_FOLDER + "/" + filename;
+			}
 		}
-		
 		// 그림파일이 아니면 null 값 리턴
 		return null;
 	}
