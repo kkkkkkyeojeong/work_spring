@@ -2,6 +2,7 @@ package com.koitt.book.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,26 +14,20 @@ import com.koitt.book.model.BookException;
 @Repository
 public class BookDaoImpl implements BookDao{
 
+	private static final String MAPPER_NS = Book.class.getName();
+	
 	@Autowired
-	private JdbcTemplate template;
+	private SqlSession session;
 	
 	public BookDaoImpl() {}
 	
 	@Override
 	public void insert(Book book) throws BookException {
 		try {
-			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO book (title, author, publisher, price, description) ");
-			sql.append("VALUES (?, ?, ?, ?, ?) ");
-			
-			template.update(sql.toString(),
-					book.getTitle(),
-					book.getAuthor(),
-					book.getPublisher(),
-					book.getPrice(),
-					book.getDescription());
+			session.insert(MAPPER_NS + ".insert", book);
 			
 		} catch(Exception e) {
+			System.out.println(e.getMessage());
 			throw new BookException(e.getMessage());
 		}
 		
@@ -41,24 +36,10 @@ public class BookDaoImpl implements BookDao{
 	@Override
 	public void update(Book book) throws BookException {
 		try {
-			StringBuilder sql = new StringBuilder();
-			
-			sql.append("UPDATE book SET title = ?, ");
-			sql.append("author = ?, ");
-			sql.append("publisher = ?, ");
-			sql.append("price = ?, ");
-			sql.append("description = ? ");
-			sql.append("WHERE isbn = ?" );
-			
-			template.update(sql.toString(),
-					book.getTitle(),
-					book.getAuthor(),
-					book.getPublisher(),
-					book.getPrice(),
-					book.getDescription(),
-					book.getIsbn());
+			session.update(MAPPER_NS + ".update", book);
 			
 		} catch(Exception e) {
+			System.out.println(e.getMessage());
 			throw new BookException(e.getMessage());
 		}
 	}
@@ -66,10 +47,10 @@ public class BookDaoImpl implements BookDao{
 	@Override
 	public void delete(String isbn) throws BookException {
 		try {
-			String sql = "DELETE FROM book WHERE isbn = ? ";
-			template.update(sql, isbn);
+			session.delete(MAPPER_NS + ".delete", isbn);
 			
 		} catch(Exception e) {
+			System.out.println(e.getMessage());
 			throw new BookException(e.getMessage());
 		}
 	}
@@ -79,10 +60,10 @@ public class BookDaoImpl implements BookDao{
 		List<Book> list = null;
 		
 		try {
-			String sql = "SELECT * FROM book ORDER BY isbn DESC";
-			list = template.query(sql, new BeanPropertyRowMapper<Book>(Book.class));
+			list = session.selectList(MAPPER_NS + ".selectAll");
 			
 		} catch(Exception e) {
+			System.out.println(e.getMessage());
 			throw new BookException(e.getMessage());
 		}
 		
@@ -94,10 +75,10 @@ public class BookDaoImpl implements BookDao{
 		Book book = null;
 		
 		try {
-			String sql = "SELECT * FROM book WHERE isbn = ?";
-			book = template.queryForObject(sql, new BeanPropertyRowMapper<Book>(Book.class), isbn);
+			book = session.selectOne(MAPPER_NS + ".select", isbn);
 			
 		} catch(Exception e) {
+			System.out.println(e.getMessage());
 			throw new BookException(e.getMessage());
 		}
 

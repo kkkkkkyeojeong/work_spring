@@ -11,12 +11,14 @@ public class Book implements Serializable{
 	private String publisher;
 	private Integer price;
 	private String description;
+	private String attachment;
 	
 	// 기본생성자
 	public Book() {}
 	
 	// 생성자
-	public Book(Integer isbn, String title, String author, String publisher, Integer price, String description) {
+	public Book(Integer isbn, String title, String author, String publisher, Integer price, String description,
+			String attachment) {
 		super();
 		this.isbn = isbn;
 		this.title = title;
@@ -24,6 +26,7 @@ public class Book implements Serializable{
 		this.publisher = publisher;
 		this.price = price;
 		this.description = description;
+		this.attachment = attachment;
 	}
 
 	// getter, setter
@@ -63,6 +66,13 @@ public class Book implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public String getAttachment() {
+		return attachment;
+	}
+
+	public void setAttachment(String attachment) {
+		this.attachment = attachment;
+	}
 
 	// HashCode
 	@Override
@@ -75,6 +85,7 @@ public class Book implements Serializable{
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + ((publisher == null) ? 0 : publisher.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		result = prime * result + ((attachment == null) ? 0 : attachment.hashCode());
 		return result;
 	}
 
@@ -112,7 +123,12 @@ public class Book implements Serializable{
 		builder.append(price);
 		builder.append(", description=");
 		builder.append(description);
+		builder.append(", attachment=");
+		builder.append(attachment);
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
+
 }

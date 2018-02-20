@@ -1,6 +1,11 @@
 package com.koitt.book.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,16 +13,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.koitt.book.model.Book;
 import com.koitt.book.model.BookException;
+import com.koitt.book.model.FileException;
 import com.koitt.book.service.BookService;
+import com.koitt.book.service.FileService;
 
 @Controller
 public class BookController {
 
 	@Autowired
-	private BookService service;
+	private BookService bookservice;
+	
+	@Autowired
+	private FileService fileservice;
 	
 	// 책 목록보기
 	@RequestMapping(value="/book-list.do", method=RequestMethod.GET)
@@ -25,7 +36,7 @@ public class BookController {
 		List<Book> list = null;
 		
 		try {
-			list = service.list();
+			list = bookservice.list();
 			
 		} catch(BookException e) {
 			model.addAttribute("error", "server");
@@ -38,17 +49,37 @@ public class BookController {
 	
 	// 책 상세보기
 	@RequestMapping(value="/book-detail.do", method=RequestMethod.GET)
-	public String detail(Model model, 
+	public String detail(Model model, HttpServletRequest request,
 			@RequestParam(value="isbn", required=true) String isbn) {
 		Book book = null;
+		String filename = null;
+		String imgPath = null;
 		
 		try {
-			book = service.detail(isbn);
+			book = bookservice.detail(isbn);
+			
+			filename = book.getAttachment();
+			
+			if(filename != null && !filename.trim().isEmpty()) {
+				filename = URLDecoder.decode(filename, "UTF-8");
+			}
+			
+			imgPath = fileservice.getPath(request, filename);
 			
 		} catch(BookException e) {
+			System.out.println(e.getMessage());
 			model.addAttribute("error", "server");
+		} catch (UnsupportedEncodingException e) {
+			System.out.println(e.getMessage());
+			model.addAttribute("error", "encoding");
 		}
+		
 		model.addAttribute("book", book);
+		model.addAttribute("filename", filename);
+		
+		if(imgPath != null && !imgPath.trim().isEmpty()) {
+			model.addAttribute("imgPath", imgPath);
+		}
 		
 		return "book-detail";
 	}
@@ -61,11 +92,29 @@ public class BookController {
 	
 	// 책 추가 후 도서 목록으로 이동
 	@RequestMapping(value="/book-add.do", method=RequestMethod.POST)
-	public String add(Model model, Book book) {
+	public String add(HttpServletRequest request,
+			String title, 
+			String author,
+			String publisher,
+			Integer price,
+			String description,
+			@RequestParam("attachment") MultipartFile attachment) {
+		
+		Book book = new Book();
+		book.setTitle(title);
+		book.setAuthor(author);
+		book.setPublisher(publisher);
+		book.setPrice(price);
+		book.setDescription(description);
+		
 		try {
-			service.add(book);
+			fileservice.add(request, attachment, book);
+			bookservice.add(book);
+			
 		} catch(BookException e) {
-			model.addAttribute("error", "server");
+			request.setAttribute("error", "server");
+		} catch (FileException e) {
+			request.setAttribute("error", "file");
 		}
 		
 		return "redirect:book-list.do";
@@ -84,12 +133,15 @@ public class BookController {
 	
 	// 책 삭제 후, 책 목록으로 이동
 	@RequestMapping(value="/book-remove.do", method=RequestMethod.POST)
-	public String remove(Model model, String isbn) {
+	public String remove(Model model, String isbn, HttpServletRequest request) {
 		try {
-			service.remove(isbn);
+			String toDeleteFilename = bookservice.remove(isbn);
+			fileservice.remove(request, toDeleteFilename);
 			
 		} catch(BookException e) {
 			model.addAttribute("error", "server");
+		} catch (FileException e) {
+			model.addAttribute("error", "file");
 		}
 		return "redirect:book-list.do";
 	}
@@ -102,7 +154,8 @@ public class BookController {
 		Book book = null;
 		
 		try {
-			book = service.detail(isbn);
+			book = bookservice.detail(isbn);
+			
 		} catch(BookException e) {
 			model.addAttribute("error", "server");
 		}
@@ -117,7 +170,7 @@ public class BookController {
 	@RequestMapping(value="/book-modify.do", method=RequestMethod.POST)
 	public String modify(Model model, Book book) {
 		try {
-			service.modify(book);
+			bookservice.modify(book);
 			
 		} catch(BookException e) {
 			model.addAttribute("error", "server");
@@ -126,7 +179,17 @@ public class BookController {
 		return "redirect:book-list.do";
 	}
 	
+	// 파일 다운로드
+	@RequestMapping(value="/download.do", method=RequestMethod.GET, params="filename")
+	public void download(HttpServletRequest request, HttpServletResponse response, String filename) {
 	
+		try {
+			fileservice.download(request, response, filename);
+			
+		} catch (FileException e) {
+			System.out.println(e.getMessage());
+		}
+	}
 	
 	
 	

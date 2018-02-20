@@ -11,10 +11,10 @@ public interface BookService {
 	public void add(Book book) throws BookException;
 	
 	// 책 수정하기
-	public void modify(Book book) throws BookException;
+	public String modify(Book book) throws BookException;
 	
 	// 책 삭제하기
-	public void remove(String isbn) throws BookException;
+	public String remove(String isbn) throws BookException;
 	
 	// 책 목록 전체 보기
 	public List<Book> list() throws BookException;
