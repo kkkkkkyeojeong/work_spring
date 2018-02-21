@@ -168,12 +168,36 @@ public class BookController {
 	
 	// 수정 후 도서목록으로 이동
 	@RequestMapping(value="/book-modify.do", method=RequestMethod.POST)
-	public String modify(Model model, Book book) {
+	public String modify(HttpServletRequest request,
+			Integer isbn,
+			String title,
+			String author,
+			String publisher,
+			Integer price,
+			String description,
+			@RequestParam("attachment") MultipartFile attachment) {
+		
+		Book book = new Book();
+		book.setIsbn(isbn);
+		book.setTitle(title);
+		book.setAuthor(author);
+		book.setPublisher(publisher);
+		book.setPrice(price);
+		book.setDescription(description);
+		
 		try {
-			bookservice.modify(book);
+			fileservice.add(request, attachment, book);
+			
+			String toDeleteFilename = bookservice.modify(book);
+			
+			fileservice.remove(request, toDeleteFilename);
 			
 		} catch(BookException e) {
-			model.addAttribute("error", "server");
+			System.out.println(e.getMessage());
+			request.setAttribute("error", "server");
+		} catch (FileException e) {
+			System.out.println(e.getMessage());
+			request.setAttribute("error", "file");
 		}
 		
 		return "redirect:book-list.do";

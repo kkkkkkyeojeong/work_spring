@@ -6,7 +6,7 @@
 </head>
 <body>
 	<h1>도서 수정</h1>
-	<form action="book-modify.do" method="post">
+	<form action="book-modify.do" method="post" enctype="multipart/form-data">
 		<div>도서 번호: ${ book.isbn }</div>
 		<div>
 			<label>제목<input type="text" name="title" value="${ book.title }"></label>
@@ -18,11 +18,15 @@
 			<label>출판사<input type="text" name="publisher" value="${ book.publisher }"></label>
 		</div>
 		<div>
-			<label>가격<input type="text" name="price" value="${ book.price }"></label>
+			<label>가격<input type="number" name="price" value="${ book.price }"></label>
 		</div>
 		<div>
 			<label>내용</label>
 			<textarea name="description">${ book.description }</textarea>
+		</div>
+		
+		<div>
+			<label>첨부파일<input type="file" name="attachment"></label>
 		</div>
 		
 		<input type="hidden" name="isbn" value="${ book.isbn }">
