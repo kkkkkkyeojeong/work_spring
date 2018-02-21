@@ -11,14 +11,16 @@ public class Book implements Serializable{
 	private String publisher;
 	private Integer price;
 	private String description;
+	private Integer userNo;
 	private String attachment;
+	private Users users;
 	
 	// 기본생성자
 	public Book() {}
 	
 	// 생성자
 	public Book(Integer isbn, String title, String author, String publisher, Integer price, String description,
-			String attachment) {
+			String attachment, Integer userNo) {
 		super();
 		this.isbn = isbn;
 		this.title = title;
@@ -27,6 +29,7 @@ public class Book implements Serializable{
 		this.price = price;
 		this.description = description;
 		this.attachment = attachment;
+		this.userNo = userNo;
 	}
 
 	// getter, setter
@@ -73,6 +76,22 @@ public class Book implements Serializable{
 	public void setAttachment(String attachment) {
 		this.attachment = attachment;
 	}
+	
+	public Integer getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(Integer userNo) {
+		this.userNo = userNo;
+	}
+
+	public Users getUsers() {
+		return users;
+	}
+
+	public void setUsers(Users users) {
+		this.users = users;
+	}
 
 	// HashCode
 	@Override
@@ -86,6 +105,8 @@ public class Book implements Serializable{
 		result = prime * result + ((publisher == null) ? 0 : publisher.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		result = prime * result + ((attachment == null) ? 0 : attachment.hashCode());
+		result = prime * result + ((users == null) ? 0 : users.hashCode());
+		result = prime * result + ((userNo == null) ? 0 : userNo.hashCode());
 		return result;
 	}
 
@@ -123,12 +144,18 @@ public class Book implements Serializable{
 		builder.append(price);
 		builder.append(", description=");
 		builder.append(description);
+		builder.append(", userNo=");
+		builder.append(userNo);
 		builder.append(", attachment=");
 		builder.append(attachment);
+		builder.append(", users=");
+		builder.append(users);
 		builder.append("]");
 		return builder.toString();
 	}
 
+	
+	
 	
 
 }

@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
 
+	
+	<!-- 
+		Root Application Context
+		아래와 같이 작성하면 applicationContext.xml에 설정한 스프링 설정은
+		애플리케이션 단위 포함된 영역에 모두 설정되는 것이다.
+		
+		dispatcher-servlet.xml 스프링 설정은 해당 servlet 영역에만 설정값이 적용된다. 
+	-->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext.xml</param-value>
+	</context-param>
+	
+	
+	<!--
+		applicationContext.xml에서 생성한 빈을 다른 서블릿에서 사용하기 위해서는
+		ContextLoaderListener가 필요하다.
+		
+		Servlet 영역의 users-list.do가 applicationContext 영역에 있는 SqlSession bean 사용을 위해
+		연결시켜주기 위해 설정한다 
+	 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+
+
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>

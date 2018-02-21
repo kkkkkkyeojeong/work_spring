@@ -64,7 +64,7 @@ public class BookController {
 				filename = URLDecoder.decode(filename, "UTF-8");
 			}
 			
-			imgPath = fileservice.getPath(request, filename);
+			imgPath = fileservice.getImgPath(request, filename);
 			
 		} catch(BookException e) {
 			System.out.println(e.getMessage());
@@ -108,7 +108,9 @@ public class BookController {
 		book.setDescription(description);
 		
 		try {
-			fileservice.add(request, attachment, book);
+			String filename = fileservice.add(request, attachment);
+			book.setAttachment(filename);
+			
 			bookservice.add(book);
 			
 		} catch(BookException e) {
@@ -186,7 +188,8 @@ public class BookController {
 		book.setDescription(description);
 		
 		try {
-			fileservice.add(request, attachment, book);
+			String filename = fileservice.add(request, attachment);
+			book.setAttachment(filename);
 			
 			String toDeleteFilename = bookservice.modify(book);
 			
