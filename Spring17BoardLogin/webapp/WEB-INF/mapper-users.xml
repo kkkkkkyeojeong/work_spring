@@ -9,10 +9,21 @@
  		SELECT * FROM users
  	</select>
  	
+ 	<select id="select-users" parameterType="int" resultType="Users">
+ 		SELECT * FROM users WHERE no = #{no}
+ 	</select>
+ 	
+ 	<select id="select-users-email" parameterType="String" resultType="Users">
+ 		SELECT * FROM users WHERE email = #{email}
+ 	</select>
+ 	
+ 	
+ 	
  	<insert id="insert-users" parameterType="Users">
  		INSERT INTO users (email, password, name, attachment) 
 			VALUES (#{email}, #{password}, #{name}, #{attachment}) 
  	</insert>
+ 	
  	
  </mapper>
  

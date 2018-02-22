@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.koitt.board.dao.AuthorityDao;
 import com.koitt.board.dao.UsersDao;
+import com.koitt.board.model.Authority;
 import com.koitt.board.model.Users;
 import com.koitt.board.model.UsersException;
 
@@ -15,24 +17,31 @@ import com.koitt.board.model.UsersException;
 public class UsersServiceImpl implements UsersService{
 
 	@Autowired
-	private UsersDao dao;
+	private UsersDao usersdao;
+	
+	@Autowired
+	private AuthorityDao authoritydao;
 	
 	public UsersServiceImpl() {}
 	
 	@Override
 	public List<Users> list() throws UsersException {
-		return dao.selectAll();
+		return usersdao.selectAll();
 	}
 
 	@Override
 	public Users detail(Integer no) throws UsersException {
-		// TODO Auto-generated method stub
-		return null;
+		return usersdao.select(no);
+	}
+	
+	@Override
+	public Users detailEmail(String email) throws UsersException {
+		return usersdao.selectEmail(email);
 	}
 
 	@Override
 	public void add(Users users) throws UsersException {
-		dao.insert(users);
+		usersdao.insert(users);
 	}
 
 	@Override
@@ -46,5 +55,11 @@ public class UsersServiceImpl implements UsersService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Authority getAuthority(Integer id) throws UsersException {
+		return authoritydao.select(id);
+	}
+
 
 }
