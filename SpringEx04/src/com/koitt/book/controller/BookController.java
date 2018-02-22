@@ -93,6 +93,7 @@ public class BookController {
 	// 책 추가 후 도서 목록으로 이동
 	@RequestMapping(value="/book-add.do", method=RequestMethod.POST)
 	public String add(HttpServletRequest request,
+			Integer userNo,
 			String title, 
 			String author,
 			String publisher,
@@ -101,6 +102,7 @@ public class BookController {
 			@RequestParam("attachment") MultipartFile attachment) {
 		
 		Book book = new Book();
+		book.setUserNo(userNo);
 		book.setTitle(title);
 		book.setAuthor(author);
 		book.setPublisher(publisher);

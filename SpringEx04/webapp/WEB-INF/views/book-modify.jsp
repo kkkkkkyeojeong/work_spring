@@ -7,6 +7,7 @@
 <body>
 	<h1>도서 수정</h1>
 	<form action="book-modify.do" method="post" enctype="multipart/form-data">
+		<div>사용자 번호: ${ book.userNo }</div>
 		<div>도서 번호: ${ book.isbn }</div>
 		<div>
 			<label>제목<input type="text" name="title" value="${ book.title }"></label>

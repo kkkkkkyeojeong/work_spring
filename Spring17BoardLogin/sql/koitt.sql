@@ -12,12 +12,12 @@ CREATE TABLE users (
 );
 
 CREATE TABLE board (
-	no INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	title VARCHAR(30) NOT NULL,
-	content VARCHAR(255) NULL,
-	user_no INT	 NOT NULL,
-	regdate DATE NOT NULL,
-	attachment VARCHAR(255), 
+	no 			INT 			NOT NULL 	PRIMARY KEY AUTO_INCREMENT,
+	title 		VARCHAR(30) 	NOT NULL,
+	content 	VARCHAR(255) 	NULL,
+	user_no		INT	 			NOT NULL,
+	regdate 	DATE 			NOT NULL,
+	attachment 	VARCHAR(255), 
 	FOREIGN KEY (user_no) REFERENCES users (no)
 );
 

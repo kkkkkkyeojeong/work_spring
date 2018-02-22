@@ -9,7 +9,7 @@ CREATE TABLE users (
 	attachment	VARCHAR(255),
 	UNIQUE (email)
 );
-
+DESC book;
 CREATE TABLE book (
 	isbn	 	INT 			NOT NULL 	PRIMARY KEY AUTO_INCREMENT,
 	title 		VARCHAR(30) 	NOT NULL,

@@ -8,6 +8,7 @@
 <body>
 	<h1>==== 도서 보기 ====</h1>
 	<dl>
+		<dt>사용자 번호</dt><dd>${ book.userNo }</dd>
 		<dt>번호</dt><dd>${ book.isbn }</dd>
 		<dt>제목</dt><dd>${ book.title }</dd>
 		<dt>내용</dt><dd>${ book.description }</dd>

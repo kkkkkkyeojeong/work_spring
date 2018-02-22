@@ -6,8 +6,8 @@
   <mapper namespace="com.koitt.book.model.Book">
  	
  	<insert id="insert" parameterType="Book">
- 		INSERT INTO book (title, author, publisher, price, description, attachment) 
-			VALUES (#{title}, #{author}, #{publisher}, #{price}, #{description}, #{attachment}) 
+ 		INSERT INTO book (user_no, title, author, publisher, price, description, attachment) 
+			VALUES (#{userNo}, #{title}, #{author}, #{publisher}, #{price}, #{description}, #{attachment}) 
  	</insert>
  	
  	<select id="select" parameterType="String" resultType="Book">

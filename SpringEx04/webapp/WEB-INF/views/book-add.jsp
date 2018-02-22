@@ -8,6 +8,9 @@
 	<h1>도서 등록</h1>
 	<form action="book-add.do" method="post" enctype="multipart/form-data">
 		<div>
+			<label>사용자 번호<input type="number" name="userNo"></label>
+		</div>
+		<div>
 			<label>제목<input type="text" name="title"></label>
 		</div>
 		<div>

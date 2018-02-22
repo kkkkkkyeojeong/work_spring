@@ -8,7 +8,7 @@
 	<h1>게시물 작성</h1>
 	<form action="board-add.do" method="post" enctype="multipart/form-data">
 		<div>
-			<label>작성자 번호<input type="text" name="userNo"></label>
+			<label>작성자 번호<input type="number" name="userNo"></label>
 		</div>
 		<div>
 			<label>제목<input type="text" name="title"></label>
