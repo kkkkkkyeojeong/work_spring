@@ -38,7 +38,7 @@
 			(SELECT users_authority.users_no, authority.id, authority.name
 			FROM users_authority, authority
 			WHERE users_authority.authority_id = authority.id) ua
-		WHERE u.no = ua.users_no AND u.no = #{email}
+		WHERE u.no = ua.users_no AND u.email = #{email}
  	</select>
  	
  	

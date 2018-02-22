@@ -47,11 +47,11 @@ INSERT INTO authority (id, name)
 
 # 사용자 입력 (비밀번호 1234)
 INSERT INTO users (email, password, name, attachment) 
-	VALUES ('admin@naver.com', '$2a$10$UhoMeaytQ7ESjeKT6To7ce55PSIzH5WtuHkrPKyVx4KTkqiYbr2cq', '관리자', NULL);
+	VALUES ('admin@naver.com', '$2a$10$/XtN8X03leQWfjpIcGFCkOOihGxr3a/m/KjxYK6tpbQsubauUGxdu', '관리자', NULL);
 INSERT INTO users (email, password, name, attachment) 
-	VALUES ('user1@naver.com', '$2a$10$UhoMeaytQ7ESjeKT6To7ce55PSIzH5WtuHkrPKyVx4KTkqiYbr2cq', '일반인', NULL);
+	VALUES ('aaa@naver.com', '$2a$10$/XtN8X03leQWfjpIcGFCkOOihGxr3a/m/KjxYK6tpbQsubauUGxdu', '일반인', NULL);
 INSERT INTO users (email, password, name, attachment) 
-	VALUES ('user2@naver.com', '$2a$10$UhoMeaytQ7ESjeKT6To7ce55PSIzH5WtuHkrPKyVx4KTkqiYbr2cq', '관리일반', NULL);
+	VALUES ('bbb@naver.com', '$2a$10$/XtN8X03leQWfjpIcGFCkOOihGxr3a/m/KjxYK6tpbQsubauUGxdu', '관리일반', NULL);
 
 # 사용자 권한 부여
 INSERT INTO users_authority VALUES (1, 10);	# 관리자에게 관리자 권한 부여
@@ -92,7 +92,7 @@ FROM users u,
 	(SELECT users_authority.users_no, authority.id, authority.name
 	FROM users_authority, authority
 	WHERE users_authority.authority_id = authority.id) ua
-WHERE u.no = ua.users_no AND u.no = #{no};
+WHERE u.no = ua.users_no AND u.no = 1;
 
 
 

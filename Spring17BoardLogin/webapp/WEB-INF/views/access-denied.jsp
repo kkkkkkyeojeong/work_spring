@@ -3,11 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>회원가입 완료</title>
+<title>접근 제한 페이지</title>
 </head>
 <body>
-	<h1>*** ${ name } 님 가입을 환영합니다. ***</h1>
-	
-	<a href="index.html">홈으로 이동</a>
+	<h1>접근 제한 페이지</h1>
+	<div>
+		<span>${ email } 님은 접근 할 수 없는 페이지 입니다.</span>
+	</div>
 </body>
 </html>
