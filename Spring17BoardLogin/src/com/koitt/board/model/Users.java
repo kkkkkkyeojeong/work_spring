@@ -2,6 +2,7 @@ package com.koitt.board.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 public class Users implements Serializable {
 	
@@ -11,8 +12,9 @@ public class Users implements Serializable {
 	private String email;
 	private String password;
 	private String name;
-	private List<Board> boardlist;	// 해당 사용자의 게시물 목록
-	private String attachment;		// 프로필 사진 파일명
+	private List<Board> boardlist;		// 해당 사용자의 게시물 목록
+	private String attachment;			// 프로필 사진 파일명
+	private Set<Authority> authorities;	// 해당 사용자의 권한 목록
 	
 	// 1. 기본생성자
 	public Users() {}
@@ -80,6 +82,14 @@ public class Users implements Serializable {
 		this.attachment = attachment;
 	}
 
+	public Set<Authority> getAuthorities() {
+		return authorities;
+	}
+
+	public void setAuthorities(Set<Authority> authorities) {
+		this.authorities = authorities;
+	}
+
 	// 4. HashCode
 	@Override
 	public int hashCode() {
@@ -91,6 +101,7 @@ public class Users implements Serializable {
 		result = prime * result + ((no == null) ? 0 : no.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((attachment == null) ? 0 : attachment.hashCode());
+		result = prime * result + ((authorities == null) ? 0 : authorities.hashCode());
 		return result;
 	}
 
@@ -122,13 +133,18 @@ public class Users implements Serializable {
 		builder.append(password);
 		builder.append(", name=");
 		builder.append(name);
-		builder.append(", attachment=");
-		builder.append(attachment);
 		builder.append(", boardlist=");
 		builder.append(boardlist);
+		builder.append(", attachment=");
+		builder.append(attachment);
+		builder.append(", authorities=");
+		builder.append(authorities);
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
+	
 
 
 	
