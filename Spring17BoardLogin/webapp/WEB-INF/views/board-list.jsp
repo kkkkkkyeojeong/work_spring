@@ -13,7 +13,7 @@
 			<tr>
 				<th>번호</th>
 				<th>제목</th>
-				<th>작성자 번호</th>
+				<th>작성자</th>
 				<th>작성일</th>
 			</tr>
 		</thead>
@@ -23,13 +23,13 @@
 				<tr>
 					<td>${ board.no }</td>
 					<td><a href="<c:url value='/board/board-detail.do?no=${ board.no }' />">${ board.title }</a></td>
-					<td>${ board.userNo }</td>
+					<td>${ board.users.name } (${ board.users.email })</td>
 					<td>${ board.regdate }</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-	<a href="index.do">홈으로 이동</a><br>
+	<a href="/index.do">홈으로 이동</a><br>
 	
 </body>
 </html>

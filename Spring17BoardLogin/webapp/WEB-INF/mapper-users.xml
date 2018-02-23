@@ -41,12 +41,29 @@
 		WHERE u.no = ua.users_no AND u.email = #{email}
  	</select>
  	
+ 	<select id="select-last-insert-id" resultType="int">
+ 		SELECT LAST_INSERT_ID()
+ 	</select>
  	
  	
  	<insert id="insert-users" parameterType="Users">
  		INSERT INTO users (email, password, name, attachment) 
 			VALUES (#{email}, #{password}, #{name}, #{attachment}) 
  	</insert>
+ 	
+ 	<!-- 한 사용자가 여러 권한을 가질 수 있기 때문에 반복문 사용한다 -->
+ 	<insert id="insert-authority" parameterType="Users">
+ 		INSERT INTO users_authority(users_no, authority_id) VALUES
+ 		<foreach collection="authorities" item="item" separator=", ">
+ 			(#{no}, #{item.id})
+ 		</foreach>
+ 	</insert>
+ 	
+ 	
+ 	<update id="update-users" parameterType="Users">
+ 		UPDATE users SET password = #{password}, name = #{name}, attachment = #{attachment}
+ 		WHERE no = #{no}
+ 	</update>
  	
  	
  </mapper>

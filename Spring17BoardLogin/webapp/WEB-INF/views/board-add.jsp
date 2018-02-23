@@ -9,7 +9,8 @@
 	<h1>게시물 작성</h1>
 	<form action="<c:url value='/board/board-add.do'/>" method="post" enctype="multipart/form-data">
 		<div>
-			<label>작성자 번호<input type="number" name="userNo"></label>
+			<span>작성자: </span>
+			<span>${ users.name } (${ users.email })</span>
 		</div>
 		<div>
 			<label>제목<input type="text" name="title"></label>
@@ -26,6 +27,8 @@
 		<input type="reset" value="글 전체 삭제"><br>
 		<a href="<c:url value='/board/board-list.do' />">글 목록으로 이동</a>
 		<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
+		<input type="hidden" name="userNo" value="${ users.no }">
+		
 	</form>
 </body>
 </html>
