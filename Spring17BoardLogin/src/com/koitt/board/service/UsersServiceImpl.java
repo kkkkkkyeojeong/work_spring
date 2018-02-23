@@ -2,10 +2,14 @@ package com.koitt.board.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,7 +67,12 @@ public class UsersServiceImpl implements UsersService{
 	public Authority getAuthority(Integer id) throws UsersException {
 		return authoritydao.select(id);
 	}
-
+	
+	
+	/*
+	 *  Principal 객체 가져오기
+	 *  Principal: 시스템을 사용하려고 하는 사용자 (로그인 한 사용자)
+	 */
 	@Override
 	public UserDetails getPrincipal(){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -77,5 +86,35 @@ public class UsersServiceImpl implements UsersService{
 		
 	}
 
+	/*
+	 * 아래와 같이 코드 작성하면 스프링에서 로그아웃 처리를 한다.
+	 */
+	@Override
+	public void logout(HttpServletRequest request, HttpServletResponse resp) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		if(auth != null) {
+			new SecurityContextLogoutHandler().logout(request, resp, auth);
+		}
+		
+		
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

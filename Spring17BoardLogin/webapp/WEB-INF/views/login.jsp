@@ -14,10 +14,17 @@
 		<input type="submit" value="로그인">
 	</form>
 	<br>
-	<a href="<c:url value='/join.do' />">회원가입</a>
-	<a href="index.html">홈으로 이동</a>
+	<p>
+		<a href="<c:url value='/join.do' />">회원가입</a>
+	</p>
+	<a href="/">홈으로 이동</a>
+	
 	<c:if test="${ param.error == 'login' }">
 		<p style="color:#FF0000">이메일 혹은 비밀번호를 잘못 입력했습니다.</p>
+	</c:if>
+	
+	<c:if test="${ param.logout == 'true' }">
+		<p style="color:#FF0000">로그아웃 하였습니다.</p>
 	</c:if>
 	
 </body>
