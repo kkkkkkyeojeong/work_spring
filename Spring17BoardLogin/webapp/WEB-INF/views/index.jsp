@@ -9,7 +9,7 @@
 	<h1>홈페이지</h1>
 	<h3>만나서 반갑습니다~!!!</h3>
 	<br>
-	<a href="board-list.do">글 목록으로 이동</a><br>
+	<a href="board/board-list.do">글 목록으로 이동</a><br>
 	<a href="admin/users-list.do">사용자 목록으로 이동</a>
 	
 	<p>

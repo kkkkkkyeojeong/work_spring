@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,7 +7,7 @@
 </head>
 <body>
 	<h1>게시물 수정</h1>
-	<form action="board-modify.do" method="post" enctype="multipart/form-data">
+	<form method="post" enctype="multipart/form-data" action="<c:url value='/board/board-modify.do' />">
 		<div>글 번호: ${ board.no }</div>
 		<div>작성자 번호: ${ board.userNo }</div>
 		<div>
@@ -22,7 +23,9 @@
 		<input type="hidden" name="no" value="${ board.no }">
 		<input type="submit" value="글 수정">
 		<input type="reset" value="입력한 내용 삭제"><br>
-		<a href="board-list.do">글 목록으로 이동</a>
+		<a href="<c:url value='/board/board-list.do'/>">글 목록으로 이동</a>
+		
+		<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
 	</form>
 </body>
 </html>

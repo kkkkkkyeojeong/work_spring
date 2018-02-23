@@ -22,6 +22,7 @@ import com.koitt.board.service.BoardService;
 import com.koitt.board.service.FileService;
 
 @Controller
+@RequestMapping("/board")	// 하위의 RequestMapping의 value 앞에 공통으로 /board 값 추가됨
 public class BoardWebController {
 
 	@Autowired
@@ -206,26 +207,7 @@ public class BoardWebController {
 	}
 	
 	
-	/*
-	 * 다운로드 링크를 화면에서 클릭하면 아래와 같이 서버에 GET 방식으로 요청
-	 * download.do?filename=파일명
-	 * 
-	 * 아래 RequestMapping 애노테이션 뜻은 아래와 같다
-	 * 요청 URL은 downlaod.do
-	 * 요청 HTTP Method는 GET
-	 * 요청한 쿼리문자열의 변수명이 filename일 경우 아래 메소드를 실행(params)
-	 */
-	@RequestMapping(value="/download.do", method=RequestMethod.GET, params="filename")
-	public void download(HttpServletRequest request, HttpServletResponse response, String filename) {
-		
-		try {
-			fileservice.download(request, response, filename);
-			
-		} catch (FileException e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	
+
 	
 	
 	

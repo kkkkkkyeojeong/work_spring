@@ -17,7 +17,7 @@
 	<p>
 		<a href="<c:url value='/join.do' />">회원가입</a>
 	</p>
-	<a href="/">홈으로 이동</a>
+	<a href="index.do">홈으로 이동</a>
 	
 	<c:if test="${ param.error == 'login' }">
 		<p style="color:#FF0000">이메일 혹은 비밀번호를 잘못 입력했습니다.</p>

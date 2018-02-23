@@ -22,7 +22,9 @@
 		</div>
 		
 		<input type="submit" name="회원가입">
-		<a href="index.html">취소</a>
+		<a href="index.do">취소</a>
+		
+		<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
 	</form>
 	
 </body>
