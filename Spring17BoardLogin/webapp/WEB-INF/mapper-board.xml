@@ -27,7 +27,7 @@
  		SELECT b.no, b.title, b.content, b.user_no, b.regdate, b.attachment, 
 			u.email, u.name, u.attachment as "uattachment"
 		FROM board b, users u 
-		WHERE b.user_no = u.no AND b.no = #{no} ORDER BY b.no DESC;
+		WHERE b.user_no = u.no AND b.no = #{no} ORDER BY b.no DESC
  	</select>
  	
  	<select id="selectAll-board" resultMap="boardResultMap">
