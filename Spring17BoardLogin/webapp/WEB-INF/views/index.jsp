@@ -15,8 +15,8 @@
 	
 	<p>
 	<sec:authorize access="!hasRole('ADMIN') and !hasRole('USER')">
-		<a href="<c:url value='/join.do'/>">회원가입</a><br>
 		<a href="<c:url value='/login.do'/>">로그인</a>
+		<a href="<c:url value='/join.do'/>">회원가입</a><br>
 	</sec:authorize>
 
 	<sec:authorize access="hasRole('ADMIN') or hasRole('USER')">
