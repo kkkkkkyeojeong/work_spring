@@ -111,6 +111,25 @@ public class UserDaoTest {
 		dao.get("unknown_id");
 
 	}
+	/*
+	 * getUserFailur() 테스트 코드에 나타난 기능
+	 * 
+	 * 				단계					내용					코드
+	 * 조건		어떤 조건을 가지고 		가져올 사용자 정보가		dao.deleteAll();
+	 * 								존재하지 않는 경우에		assertThat(dao.getCounr(), is(0));
+	 * 	
+	 * 행위		무엇을 할 때			존재하지 않는 id로 get()	dao.get("unknown_id);
+	 * 결과		어떤 결과가 나온다		을 실행하면 특별한		@Test(expected=
+	 * 								예외가 던져진다			EmptyResultDataAccessException.class)
+	 * 
+	 * 
+	 * 위와 같이 작성하면 기능 설계(단계, 내용), 코드 구현, 테스트 세가지 작업이 동시에 끝날 수 있다
+	 * 
+	 * 테스트 주도 개발 (TDD: Test Driven Development)
+	 * TDD의 기본 원칙: 실패한 테스트를 성공시키기 위한 목적이 아닌 코드는 만들지 않는다
+	 * TDD는 테스트를 먼저 만들고 그 테스트가 성공하도록 하는 코드만 만드는 식으로
+	 * 진행하기 때문에 테스트를 빼먹지 않고 꼼꼼하게 만들어 낼 수 있다.
+	 */
 	
 	
 }
