@@ -5,7 +5,8 @@
  
   <mapper namespace="com.koitt.board.model.Board">
  	
- 	<insert id="insert-board" parameterType="Board">
+ 	<insert id="insert-board" parameterType="Board"
+ 		useGeneratedKeys="true" keyProperty="no">
  		INSERT INTO board (title, content, user_no, regdate, attachment) 
 			VALUES (#{title}, #{content}, #{userNo}, CURDATE(), #{attachment}) 
  	</insert>
@@ -55,7 +56,11 @@
  	</delete>
  	
  	<select id="count-board" resultType="int">
- 		SELETE COUNT(*) FROM board
+  		SELECT COUNT(*) FROM board
+  	</select>
+  	
+  	<select id="select-last-insert-id" resultType="int">
+ 		SELECT LAST_INSERT_ID()
  	</select>
  	
  	  	

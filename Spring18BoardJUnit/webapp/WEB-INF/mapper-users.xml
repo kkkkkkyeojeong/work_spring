@@ -46,7 +46,8 @@
  	</select>
  	
  	
- 	<insert id="insert-users" parameterType="Users">
+ 	<insert id="insert-users" parameterType="Users"
+ 		useGeneratedKeys="true" keyProperty="no">
  		INSERT INTO users (email, password, name, attachment) 
 			VALUES (#{email}, #{password}, #{name}, #{attachment}) 
  	</insert>
@@ -71,7 +72,15 @@
  	</delete>
  	
  	<select id="count-users" resultType="int">
- 		SELETE COUNT(*) FROM users
+ 		SELECT COUNT(*) FROM users
+ 	</select>
+ 	
+ 	<delete id="delete-all-users-authority">
+ 		DELETE FROM users_authority
+ 	</delete>
+ 	
+ 	<select id="count-users-authority" resultType="int">
+ 		SELECT COUNT(*) FROM users_authority
  	</select>
  	
  	
