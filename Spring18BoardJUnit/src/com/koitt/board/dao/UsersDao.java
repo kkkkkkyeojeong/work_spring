@@ -32,5 +32,33 @@ public interface UsersDao {
 	public Integer selectLastInsertId() throws UsersException;
 	
 	
+	// JUnit 메소드 추가
+	// 사용자 전체 삭제
+	public void deleteAll() throws UsersException;
+	
+	// 사용자 수 가져오기
+	public Integer getCount() throws UsersException;
+	
+	// 사용자 권한 (users_authority) 테이블 전체 삭제
+	public void deleteAllUsersAuthority() throws UsersException;
+	
+	// 사용자 권한 (users_authority) 테이블 행의 수 가져오기
+	public Integer getCountUsersAuthority() throws UsersException;
+	
+	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -71,7 +71,15 @@
  	</delete>
  	
  	<select id="count-users" resultType="int">
- 		SELETE COUNT(*) FROM users
+ 		SELECT COUNT(*) FROM users
+ 	</select>
+ 	
+ 	<delete id="delete-all-users-authority">
+ 		DELETE FROM users_authority
+ 	</delete>
+ 	
+ 	<select id="count-users-authority" resultType="int">
+ 		SELECT COUNT(*) FROM users_authority
  	</select>
  	
  	
