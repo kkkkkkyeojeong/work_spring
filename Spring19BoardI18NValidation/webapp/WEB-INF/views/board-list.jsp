@@ -1,20 +1,26 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
-<title>게시판 목록</title>
+<title><spring:message code="blist" /></title>
 </head>
 <body>
-	<h1>게시판 목록</h1>
-	<a href="<c:url value='/board/board-add.do' />">글쓰기</a>
+	<h1><spring:message code="blist" /></h1>
+	
+	<div>Language : ${ pageContext.response.locale }</div>
+	<a href="board-list.do?lang=ko"><spring:message code="label.ko" /></a>
+	<a href="board-list.do?lang=en"><spring:message code="label.en" /></a><br><br>
+	
+	<a href="<c:url value='/board/board-add.do' />"><spring:message code="write" /></a>
 	<table>
 		<thead>
 			<tr>
-				<th>번호</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>작성일</th>
+				<th><spring:message code="no" /></th>
+				<th><spring:message code="title" /></th>
+				<th><spring:message code="userNo" /></th>
+				<th><spring:message code="regdate" /></th>
 			</tr>
 		</thead>
 		
@@ -29,7 +35,7 @@
 			</c:forEach>
 		</tbody>
 	</table>
-	<a href="<c:url value='/index.do' />">홈으로 이동</a>s
+	<a href="<c:url value='/index.do' />"><spring:message code="home" /></a>
 	
 </body>
 </html>
