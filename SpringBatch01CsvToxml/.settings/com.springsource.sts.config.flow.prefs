@@ -1,0 +1,2 @@
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/SpringBatch01CsvToxml/src/com/koitt/jobs/job-csv-to-xml.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph>\r\n<element clazz\="JobModelElement" type\="job">\r\n<structure end\="4193" endstart\="4181" start\="3918" startend\="3946"/>\r\n<bounds height\="118" width\="130" x\="15" y\="17"/>\r\n</element>\r\n</graph>
+eclipse.preferences.version=1
