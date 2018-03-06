@@ -93,6 +93,7 @@
 	-->	
 	<bean id="xmlItemWriter" class="org.springframework.batch.item.xml.StaxEventItemWriter">
 		<property name="resource" ref="outputFile" />
+		<property name="encoding" value="utf-8" />
 		<property name="marshaller" ref="reportMarshaller" />
 		<property name="rootTagName" value="report" />
 	</bean>
@@ -120,7 +121,9 @@
 			reader가 읽고나서 processor가 처리한 개수가 commit-interval개 만큼 쌓이면 
 			wirter에 item들을 보내서 wirte하게 된다.
 			(자바과정에서 파일 전송 시, buffering 하는 것과 동일한 원리)
-			Spring Batch에서는 한번에 writer에 전달하는 것을 하나의 트랜젝션 단위로 본다.  
+			Spring Batch에서는 한번에 writer에 전달하는 것을 하나의 트랜젝션 단위로 본다. 
+			
+			하나의 Job에 여러개의 step 가능 
 	-->
 	<batch:job id="csvToXmlJob">
 		<batch:step id="step1">

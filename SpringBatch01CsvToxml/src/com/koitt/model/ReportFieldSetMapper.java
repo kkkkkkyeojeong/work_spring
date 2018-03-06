@@ -22,6 +22,10 @@ public class ReportFieldSetMapper implements FieldSetMapper<Report>{
 		dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	}
 	
+	/*
+	 * FieldSet = ResultSet 으로 생각
+	 * 행의 개수만큼 읽어옴
+	 */
 	@Override
 	public Report mapFieldSet(FieldSet fieldSet) throws BindException {
 		
