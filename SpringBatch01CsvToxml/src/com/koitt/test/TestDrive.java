@@ -32,9 +32,9 @@ public class TestDrive {
 			 * 
 			 * 전달할 Parameter가 없을 때
 			 */
-			// JobExecution execution = launcher.run(job, new JobParameters());
+			JobExecution execution = launcher.run(job, new JobParameters());
 			
-			// 전달할 Parameter가 있을 때
+			/*// 전달할 Parameter가 있을 때
 			String in = "C:/sample/ex01/report.csv";
 			String out = "C:/sample/ex01/report.xml";
 			
@@ -44,7 +44,7 @@ public class TestDrive {
 					.addString("date", new Date().toString())
 					.toJobParameters();
 			
-			JobExecution execution = launcher.run(job, jobParameters);
+			JobExecution execution = launcher.run(job, jobParameters);*/
 			
 			// 종료 상태 출력
 			System.out.println("종료 상태 : " + execution.getStatus());
