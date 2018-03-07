@@ -10,17 +10,23 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class TestDrive {
 	
-public static void main(String[] args) {
+	public static void main(String[] args) {
 		
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("com/koitt/config/applicationContext.xml");
 		
 		JobLauncher launcher = context.getBean(JobLauncher.class);
 		
-		Job job = context.getBean("xmlToCsvJob", Job.class);
+		Job job = context.getBean("mySqlToXmlJob", Job.class);
 		
 		try {
-			JobExecution execution = launcher.run(job, new JobParameters());
+			// Builder Pattern
+			JobParameters param = new JobParametersBuilder()
+					.addString("age", "20")
+					.toJobParameters();
+			
+			JobExecution execution = launcher.run(job, param);
+		
 			System.out.println("종료상태 : " + execution.getStatus());
 			System.out.println("종료상태 : " + execution.getAllFailureExceptions());
 			
