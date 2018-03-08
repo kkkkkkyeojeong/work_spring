@@ -8,6 +8,7 @@ import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ public class RunScheduler {
 	private JobLauncher jobLauncher;
 	
 	@Autowired
+	@Qualifier("MySQLToXmlJob")		// job-mysql-to-csv.xml의 MySQLToXmlJob id값을 가져옴 
 	private Job job;
 	
 	// 매일 오후 4시마다 Job 실행
