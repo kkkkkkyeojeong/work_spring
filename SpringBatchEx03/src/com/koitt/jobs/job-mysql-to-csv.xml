@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	
+	<!-- ItemReader 빈 생성 -->
+	<bean id="mySqlitemReader" class="org.springframework.batch.item.database.JdbcCursorItemReader" scope="step">
+		<property name="dataSource" ref="dataSource" />
+		<property name="sql" value="SELECT * FROM board"/>
+		<property name="rowMapper">
+			<bean class="com.koitt.model.BoardRowMapper" />
+		</property>
+	</bean>
+	
+	
+	<!-- ItemWriter 빈 생성(2번 예제의 ItemWriter와 동일 -->
+	 <bean id="csvItemWriter" class="org.springframework.batch.item.file.FlatFileItemWriter">
+		<property name="resource" value="file:c:/sample/prac03/board.csv" />
+		<property name="encoding" value="utf-8" />
+		<property name="appendAllowed" value="false" />
+		<property name="lineAggregator" >
+			<bean class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+				<property name="delimiter" value="," />
+				<property name="fieldExtractor">
+					<bean class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+						<property name="names" value="no, title, content, user_no, regdate, attachment" />
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<!-- Tasklet - step2 빈 생성 -->
+	<bean id="sendEmailTasklet" class="com.koitt.service.MailService">
+		<property name="sendEmail" value="file:C:/sample/prac03/board.csv" />
+	</bean>
+	
+	<!-- Tasklet - step3 빈 생성 -->
+	<bean id="deleteFile" class="com.koitt.model.DeleteFile">
+		<property name="directory" value="file:C:/sample/prac03/" />
+	</bean>
+	
+	
+	<!-- Batch Job 빈 생성 -->
+	<batch:job id="MySQLToXmlJob">
+		<batch:step id="step1" next="step2">
+			<batch:tasklet>
+				<batch:chunk reader="mySqlitemReader" 
+							 writer="csvItemWriter" 
+							 commit-interval="10" />
+			</batch:tasklet>
+		</batch:step>
+		
+		<batch:step id="step2" next="step3">
+			<batch:tasklet ref="sendEmailTasklet" />
+		</batch:step>
+		
+		<batch:step id="step3">
+			<batch:tasklet ref="deleteFile" />
+		</batch:step>
+		
+	</batch:job>
+	
+
+
+</beans>
+
+
+
+
+
+
+
+
+
+

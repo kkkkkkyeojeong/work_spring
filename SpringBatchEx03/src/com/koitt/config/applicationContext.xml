@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+
+	<!-- MySQL에서 board 테이블 정보를 가져와 csv파일로 변환하기 -->
+	<!-- MySQL 데이터베이스 접속 -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/koitt?useSSL=false" />
+		<property name="username" value="root" />
+		<property name="password" value="koitt" />
+	</bean>
+	
+	<!-- ChunkSize 만큼을 트랜젝션 단위로 처리하기 위한 TransactionManager 빈 생성 -->
+	<bean id="transactionManager" class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+	
+	
+	<!-- job-meta를 메모리에 저장할 때 사용 -->
+	<bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+	
+	
+	<!-- JobLauncher 빈 생성 -->
+	<bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository" />
+	</bean>
+	
+	
+	<!-- 위에서 만든 csv파일을 메일로 전송하기  -->
+	<!-- 
+		메일 발송을 위한 빈 객체 등록(Gmail)
+		참고자료 : https://support.google.com/mail/answer/7104828?hl=ko&rd=3&visit_id=1-636558471446668580-299053446
+	 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="protocol" value="smtp" />
+		<property name="defaultEncoding" value="utf-8" />
+		<property name="username" value="duw@gmail.com" />
+		<property name="password" value="" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
+	<!-- 
+		FreeMarker: 메일 발송을 위한 템플릿 제공 
+		templateLoaderPath: FreeMarker 템플릿 파일이 저장된 위치 설정 
+							(ClassPath 기준)
+	-->
+	<!-- <bean id="freeMarkerConfiguration"
+		class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+		<property name="templateLoaderPath" value="/fm_templates" />
+	</bean> -->
+	
+	<context:component-scan base-package="com.koitt" /> 
+	
+	
+	<!-- Job 생성하는 스프링 xml 파일 import -->
+	<import resource="./spring-task-scheduler.xml"/>
+	<import resource="../jobs/job-mysql-to-csv.xml" />
+	
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
