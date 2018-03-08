@@ -19,8 +19,6 @@ public class MailService implements Tasklet{
 
 	@Autowired
 	private JavaMailSender mailsender;
-	
-	private Resource sendEmail;
 
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
@@ -34,7 +32,7 @@ public class MailService implements Tasklet{
 				helper.setFrom("duwjd6539@gmail.com");		// 보내는 사람 이메일 주소
 				helper.setTo("yeok6539@naver.com");			// 받는 사람 이메일 주소
 				helper.setSubject("Board 테이블 정보");			// 메일 제목
-				helper.setText("안녕하세요", false);	
+				helper.setText("안녕하세요", false);			// 메일 내용
 
 				helper.addAttachment("board.csv", new FileSystemResource("C:/sample/prac03/board.csv"));
 
@@ -52,17 +50,6 @@ public class MailService implements Tasklet{
 		
 		return RepeatStatus.FINISHED;
 	}
-
-	public Resource getSendEmail() {
-		return sendEmail;
-	}
-
-	public void setSendEmail(Resource sendEmail) {
-		this.sendEmail = sendEmail;
-	}
-
-	
-	
 
 
 }

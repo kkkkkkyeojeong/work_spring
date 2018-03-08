@@ -17,6 +17,10 @@
 	</bean>
 	
 	
+	<!-- ItemProcessor 빈 생성 -->
+	<bean id="itemProcessor" class="com.koitt.model.CustomItemProcessor" />
+	
+	
 	<!-- ItemWriter 빈 생성(2번 예제의 ItemWriter와 동일 -->
 	 <bean id="csvItemWriter" class="org.springframework.batch.item.file.FlatFileItemWriter">
 		<property name="resource" value="file:c:/sample/prac03/board.csv" />
@@ -36,10 +40,9 @@
 	
 	
 	<!-- Tasklet - step2 빈 생성 -->
-	<bean id="sendEmailTasklet" class="com.koitt.service.MailService">
-		<property name="sendEmail" value="file:C:/sample/prac03/board.csv" />
-	</bean>
-	
+	<bean id="sendEmailTasklet" class="com.koitt.service.MailService" />
+
+
 	<!-- Tasklet - step3 빈 생성 -->
 	<bean id="deleteFile" class="com.koitt.model.DeleteFile">
 		<property name="directory" value="file:C:/sample/prac03/" />
@@ -50,7 +53,8 @@
 	<batch:job id="MySQLToXmlJob">
 		<batch:step id="step1" next="step2">
 			<batch:tasklet>
-				<batch:chunk reader="mySqlitemReader" 
+				<batch:chunk reader="mySqlitemReader"
+							 processor="itemProcessor" 
 							 writer="csvItemWriter" 
 							 commit-interval="10" />
 			</batch:tasklet>

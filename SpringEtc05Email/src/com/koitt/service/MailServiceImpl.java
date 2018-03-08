@@ -68,8 +68,6 @@ public class MailServiceImpl implements MailService {
 				
 				// 첨부파일
 				helper.addAttachment("document.csv", new FileSystemResource("C:/sample/ex01/report.csv"));
-				
-				
 			}
 		};
 		
