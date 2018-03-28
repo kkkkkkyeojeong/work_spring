@@ -1,3 +1,6 @@
+#데이터베이스 인코딩 변경
+ALTER DATABASE koitt CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
 #DDL (Date Definition Language)
 DROP TABLE board;
 DROP TABLE users_authority;
