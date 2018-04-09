@@ -46,13 +46,20 @@
 	</servlet>
 	
 	<!-- 
-		url 입력 시 맨 뒤에 .do라고 입력을 하면 
+		모든 경로에서 
 		DispatcherServlet을 사용하겠다는 뜻
+		(/upload 이하 경로는 DispatherServlet을 통하면 이미지 출력이 안됨)
 	 -->
 	
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>
-		<url-pattern>*.do</url-pattern>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<!-- /upload 경로를 가지는 url을 사용할 경우에는 default 서블릿을 사용한다. -->
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>/upload/*</url-pattern>
 	</servlet-mapping>
 	
 	<!-- 
