@@ -40,6 +40,32 @@
 
 	<script src="js/jquery-1.12.4.js"></script>
 	<script src="js/jquery.mobile-1.4.5.js"></script>
+	
+	<script>
+		var REST_URI = 'http://192.168.0.12:8080/Spring20BoardRest/rest';
+
+		// jQueryMobile 페이지 관련 이벤트
+		// 페이지를 생성하기 바로 전에 실행
+		$(document).on('pagebeforecreate', function() {
+			console.log('pagebeforecreate 이벤트 발생');
+		});
+
+		// 페이지를 생성하고 실행
+		$(document).on('pagecreate', function() {
+			console.log('pagecreate 이벤트 발생');
+		});
+
+		// 페이지를 이동하기 바로 전에 실행 
+		$(document).on('pagebeforechange', function() {
+			console.log('pagebeforechange 이벤트 발생');
+		});
+
+		// 페이지를 이동하고 실행
+		$(document).on('pagechange', function() {
+			console.log('pagechange 이벤트 발생');
+		});
+	</script>
+	
 </body>
 </html>
 
