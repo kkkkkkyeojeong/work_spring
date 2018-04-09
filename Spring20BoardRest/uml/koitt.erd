@@ -23,8 +23,8 @@
       <constraint>
         <height>-1</height>
         <width>-1</width>
-        <x>508</x>
-        <y>60</y>
+        <x>334</x>
+        <y>35</y>
       </constraint>
       <sourceConnections>
         <net.java.amateras.db.visual.model.ForeignKeyModel>
@@ -51,8 +51,8 @@
             <constraint>
               <height>-1</height>
               <width>-1</width>
-              <x>204</x>
-              <y>63</y>
+              <x>36</x>
+              <y>44</y>
             </constraint>
             <sourceConnections/>
             <targetConnections>
@@ -80,8 +80,8 @@
                   <constraint>
                     <height>-1</height>
                     <width>-1</width>
-                    <x>217</x>
-                    <y>220</y>
+                    <x>44</x>
+                    <y>194</y>
                   </constraint>
                   <sourceConnections>
                     <net.java.amateras.db.visual.model.ForeignKeyModel>
@@ -108,8 +108,8 @@
                         <constraint>
                           <height>-1</height>
                           <width>-1</width>
-                          <x>231</x>
-                          <y>325</y>
+                          <x>51</x>
+                          <y>303</y>
                         </constraint>
                         <sourceConnections/>
                         <targetConnections>
@@ -445,7 +445,7 @@
   <jarFile>C:\mysql-connector-java-5.1.45\mysql-connector-java-5.1.45-bin.jar</jarFile>
   <jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>
   <jdbcUrl>jdbc:mysql://localhost:3306/koitt</jdbcUrl>
-  <jdbcUser>kkkjeong</jdbcUser>
+  <jdbcUser>root</jdbcUser>
   <jdbcPassword>koitt</jdbcPassword>
   <jdbcSchema></jdbcSchema>
   <jdbcCatalog></jdbcCatalog>
