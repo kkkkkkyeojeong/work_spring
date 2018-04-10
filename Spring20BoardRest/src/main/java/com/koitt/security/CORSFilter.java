@@ -42,7 +42,7 @@ public class CORSFilter implements Filter {
 		// 허용하는 헤더의 목록을 작성
 		resp.setHeader("Access-Control-Allow-Headers", 
 				"X-Requested-With, Content-Type, Authorization, "
-				+ "Originm Accept, Access-Control-Request-Method, "
+				+ "Origin, Accept, Access-Control-Request-Method, "
 				+ "Access-Control-Request-Headers");
 		chain.doFilter(request, resp);
 	}
