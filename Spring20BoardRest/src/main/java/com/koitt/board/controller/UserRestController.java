@@ -1,7 +1,11 @@
 package com.koitt.board.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +15,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponents;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.koitt.board.model.FileException;
 import com.koitt.board.model.Users;
 import com.koitt.board.model.UsersException;
+import com.koitt.board.service.FileService;
 import com.koitt.board.service.UsersService;
 
 @RestController
@@ -24,6 +31,9 @@ public class UserRestController {
 	
 	@Autowired
 	private UsersService userService;
+	
+	@Autowired
+	private FileService fileService;
 	
 	// produces: 서버가 응답으로 보낼 미디어 타입을 지정(아래는 JSON으로 응답할 경우) 
 	@RequestMapping(value="/user/login", method=RequestMethod.POST,
@@ -59,4 +69,73 @@ public class UserRestController {
 		}	
 	}
 	
+	// 사용자 생성
+	@RequestMapping(value="/user", method=RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> newUser(HttpServletRequest req, 
+			String email, String password, String name, 
+			@RequestParam("attachment") MultipartFile attachment) {
+		
+		// 클라이언트로부터 전달받은 값으로 객체 생성
+		Users users = new Users(null, email, password, name, null);
+		
+		try {
+			// 프로필 사진 저장
+			String filename = fileService.add(req, attachment);
+			
+			// 프로필 사진 파일명을 users VO 객체에 담기
+			users.setAttachment(filename);
+			
+			// 데이터베이스에 사용자 추가
+			userService.add(users);
+			
+			// 정상적으로 생성되었다는 응답코드를 클라이언트로 전달
+			return new ResponseEntity<>(HttpStatus.CREATED);
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			// 서버 오류가 발생했다는 응답코드를 클라이언트로 전달
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
