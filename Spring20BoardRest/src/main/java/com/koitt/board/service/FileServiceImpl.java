@@ -203,6 +203,25 @@ public class FileServiceImpl implements FileService {
 	public String getUploadPath(HttpServletRequest request) {
 		return request.getContextPath() + UPLOAD_FOLDER;
 	}
+
+	@Override
+	public String getDownloadPath(HttpServletRequest request, String filename) {
+		// http:// localhost:8080/Spring20BoardRest/download.do?filename=파일명
+		
+		// 컨텍스트 경로 가져오기 (localhost:8080/Spring20BoardRest)
+		String contextPath = request.getContextPath();
+		
+		// http://192.168.0.12:8080/Spring20BoardRest/(요청한주소)
+		String url = request.getRequestURL().toString();
+		
+		// "/Spring20BoardRest"가 시작되는 index 번호
+		int indexOf = url.indexOf(contextPath);
+		
+		// http:// 192.168.0.11:8080/Spring20BoardRest
+		String serverUrl = url.substring(0, indexOf) + contextPath;
+		
+		return serverUrl + "/download.do?filename=" + filename;
+	}
 }
 
 

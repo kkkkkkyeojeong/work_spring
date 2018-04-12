@@ -24,6 +24,10 @@ public interface FileService {
 	
 	// 파일 저장 폴더 경로 가져오기(ContextPath + /upload)
 	public String getUploadPath(HttpServletRequest request);
+	
+	// 파일 다운로드 경로 가져오기
+	public String getDownloadPath(HttpServletRequest request, String filename);
+	
 }
 
 
