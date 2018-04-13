@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.koitt.board.model.BoardException;
 import com.koitt.board.model.Users;
 import com.koitt.board.model.UsersException;
 
@@ -59,7 +60,12 @@ public class UsersDaoImpl implements UsersDao {
 
 	@Override
 	public void delete(Integer no) {
-		// TODO Auto-generated method stub
+		try {
+			session.delete(MAPPER_NS + ".delete-users", no);
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		
 	}
 

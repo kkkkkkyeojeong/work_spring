@@ -69,9 +69,16 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public String remove(Integer no, String password) throws UsersException {
-		// TODO Auto-generated method stub
-		return null;
+	public String remove(Integer no) throws UsersException {
+		// 삭제하기 전에 삭제할 회원을 가져온다
+		Users users = usersDao.select(no);
+		String filename = users.getAttachment();
+		
+		// 회원탈퇴
+		usersDao.delete(no);
+		
+		// 삭제할 파일명을 컨트롤러로 전달
+		return filename;
 	}
 
 	@Override

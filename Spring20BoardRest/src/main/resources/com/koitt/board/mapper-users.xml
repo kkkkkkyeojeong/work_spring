@@ -60,8 +60,12 @@
   		WHERE no = #{no}
   	</update>
   	
+  	<delete id="delete-users" parameterType="int">
+  		DELETE FROM users WHERE no = #{no}
+  	</delete>
+  	
   	<delete id="delete-all-users">
-  		DELETE FROM users
+  		DELETE FROM users 
   	</delete>
   	
   	<select id="count-users" resultType="int">

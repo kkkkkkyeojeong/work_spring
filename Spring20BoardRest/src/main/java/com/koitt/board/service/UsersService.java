@@ -19,7 +19,7 @@ public interface UsersService {
 	
 	public void add(Users users) throws UsersException;
 	
-	public String remove(Integer no, String password) throws UsersException;
+	public String remove(Integer no) throws UsersException;
 	
 	public String modify(Users users) throws UsersException;
 	

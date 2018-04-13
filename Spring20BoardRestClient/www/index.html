@@ -182,8 +182,8 @@
 						$('#home-name').text(data.users.name);
 						// #home-attachment > img : home.html에서 앨리먼트 의미
 						$('#home-attachment > img').attr('src', data.src);
-						for(var i = 0; i < data.users.userTypes.length; i++) {
-							$('#home-authority').append('<div>' + data.users.userTypes[i].type + '<div>');
+						for(var i = 0; i < data.users.authorities.length; i++) {
+							$('#home-authority').append('<div>' + data.users.authorities[i].type + '<div>');
 						}
 						
 						console.log(JSON.stringify(data));
@@ -429,6 +429,109 @@
 					});
 				});
 			}
+
+			// 회원정보 수정 
+			else if(isCurrentPage('/user-setting.html')) {
+				$.ajax({
+					type: 'get',
+					url: REST_URI + '/user/' + sessionStorage.getItem('usersNo'),
+					headers: {
+						authorization: 'Basic ' + sessionStorage.getItem('base64Credentials') 
+					},
+					dataType: 'json',
+					success: function(data, textStatus, xhr) {
+						// data = resultmap 같은 객체임
+						$('#user-setting-id').text(data.users.no);
+						$('#user-setting-email').text(data.users.email);
+						$('#user-setting-name').val(data.users.name);
+						$('#user-setting-attachment-img > img').attr('src', data.src);
+			
+						// 글 수정하기 버튼 클릭 이벤트
+						$('#btnUserModifySubmit').unbind('click');
+						$('#btnUserModifySubmit').bind('click', function(event){
+							// 기본 동작 막기
+							event.preventDefault();
+
+							// 두 번 실행 방지를 위해 버튼 비활성
+							$('#btnUserModifySubmit').prop('disabled', true);
+
+							// FormData 가져오기
+							var form = $('#frmUserModify')[0];
+							var formData = new FormData(form);
+
+							
+							$.ajax({
+								type: 'post',
+								url: REST_URI + '/user/' + sessionStorage.getItem('usersNo'),
+								headers: {
+									authorization: 'Basic ' + sessionStorage.getItem('base64Credentials')
+								},
+								enctype: 'multipart/form-data',
+								data: formData, 
+								processData: false,
+								contentType: false,
+								
+								// 위에까지 요청할 내용, 아래부터는 요청 후 내용 
+								success: function(data, textStatus, xhr) {
+									$('#btnUserModifySubmit').prop('disabled', false);
+
+									/* var plainCredentials = $.extend(data.users.email + ":" + data.users.password);
+									var base64Credentials = $.encodeBASE64('plainCredentials'); */
+
+									sessionStorage.setItem('base64Credentials', data.credentials);
+
+									$.mobile.changePage('home.html');
+								},
+								error: function(jqXHR, textStatus, errorThrown) {
+									$('#btnUserModifySubmit').prop('disabled', false);
+									if(jqXHR.status == 401) {
+										alert('비밀번호를 잘못 입력하였습니다.')
+									}
+								}
+							});
+						});
+					},
+					error: function(jqXHR, textStatus, errorThrown) {
+						console.log(JSON.stringify(jqXHR));
+						console.log(JSON.stringify(textStatus));
+						console.log(JSON.stringify(errorThrown));
+					}
+				});
+			}
+
+
+			// 회원 탈퇴 확인 화면
+			else if(isCurrentPage('/user-remove-confirm.html')) {
+				$('#btnUserDelSubmit').unbind('click');
+				$('#btnUserDelSubmit').bind('click', function(event) {
+					// 기본 동작 맞추기
+					event.preventDefault();
+
+					// 두 번 실행 방지
+					$('#btnUserDelSubmit').prop('disabled', true);
+
+					// 삭제
+					$.ajax({
+						type: 'delete',
+						url: REST_URI + '/' + sessionStorage.getItem('usersNo'),
+						headers: {
+							authorization: 'Basic ' + sessionStorage.getItem('base64Credentials')
+						},
+						success: function(data, textStatus, xhr) {
+							$('#btnUserDelSubmit').prop('disabled', false);
+							$.mobile.changePage('index.html');
+						},
+						error: function(jqXHR, textStatus, errorThrown) {
+							$('#btnUserDelSubmit').prop('disabled', false);
+						
+						}
+					});
+				});
+			}
+			
+
+
+			
 			
 		});
 
