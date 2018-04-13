@@ -41,32 +41,41 @@ public class UserRestController {
 			produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Map<String, Object>> login(@RequestBody Users users) {
 
-		System.out.println(users);
+		System.out.println("로그인 유저: " + users);
 
 		// 아이디 존재 유무와 비밀번호 일치 여부 확인
 		try {
 			boolean isMatched = userService.isPasswordMatched(
 					users.getEmail(), users.getPassword());
+			
+			Users user01 = userService.detailByEmail(users.getEmail());
+			System.out.println("불러온 유저: " + user01);
+			
+			if(user01.isMember()) {
+				if (isMatched) {				
+					// Base64 인코딩 전 평문
+					String plainCredentials = users.getEmail() + ":" + users.getPassword();
 
-			if (isMatched) {				
-				// Base64 인코딩 전 평문
-				String plainCredentials = users.getEmail() + ":" + users.getPassword();
+					// 평문을 Base64로 인코딩
+					String base64Credentials = new String(Base64.encodeBase64(
+							plainCredentials.getBytes()));
 
-				// 평문을 Base64로 인코딩
-				String base64Credentials = new String(Base64.encodeBase64(
-						plainCredentials.getBytes()));
+					System.out.println("인코딩 한 값: " + base64Credentials);
+					
+					// email 값을 이용하여 해당 사용자에 대한 정보를 DB로부터 가져오기
+					users = userService.detailByEmail(users.getEmail());
+					
+					Map<String, Object> resultMap = new HashMap<>();
+					resultMap.put("credentials", base64Credentials);
+					resultMap.put("usersNo", users.getNo());
 
-				System.out.println("인코딩 한 값: " + base64Credentials);
-				
-				// email 값을 이용하여 해당 사용자에 대한 정보를 DB로부터 가져오기
-				users = userService.detailByEmail(users.getEmail());
-				
-				Map<String, Object> resultMap = new HashMap<>();
-				resultMap.put("credentials", base64Credentials);
-				resultMap.put("usersNo", users.getNo());
-
-				return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+					return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+				}
+				else {
+					return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+				}
 			}
+	
 			else {
 				return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 			}
