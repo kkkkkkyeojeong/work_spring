@@ -1,6 +1,9 @@
 #특정 테이블 컬럼의 타입을 변경
 ALTER TABLE board MODIFY COLUMN regdate DATETIME;
 
+#
+ALTER TABLE users ADD member tinyint(1) DEFAULT 1;
+
 #데이터베이스 인코딩 변경
 ALTER DATABASE koitt CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 

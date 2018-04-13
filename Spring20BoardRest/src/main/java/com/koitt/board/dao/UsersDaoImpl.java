@@ -169,6 +169,16 @@ public class UsersDaoImpl implements UsersDao {
 		
 		return count;
 	}
+
+	@Override
+	public void memberUpdate(Users users) throws UsersException {
+		try {
+			session.update(MAPPER_NS + ".update-member-users", users);
+			
+		} catch (Exception e) {
+			throw new UsersException(e.getMessage());
+		}
+	}
 }
 
 

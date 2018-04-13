@@ -150,6 +150,12 @@ public class UsersServiceImpl implements UsersService {
 		return passwordEncoder.matches(oldPassword, users.getPassword());
 	}
 
+	@Override
+	public void memberModify(Users users) throws UsersException {
+		usersDao.memberUpdate(users);
+		
+	}
+
 }
 
 

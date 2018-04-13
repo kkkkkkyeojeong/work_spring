@@ -12,6 +12,7 @@ public class Users implements Serializable {
 	private String password;			// 비밀번호
 	private String name;				// 이름
 	private String attachment;			// 프로필 사진 파일명
+	private boolean member;				// 탈퇴 여부 , 0/false=탈퇴, 1/true=회원
 	private List<Board> boardList;		// 해당 사용자의 게시물 목록
 	private Set<Authority> authorities;	// 해당 사용자의 권한 목록
 	
@@ -89,6 +90,14 @@ public class Users implements Serializable {
 	public void setAuthorities(Set<Authority> authorities) {
 		this.authorities = authorities;
 	}
+	
+	public boolean isMember() {
+		return member;
+	}
+
+	public void setMember(boolean member) {
+		this.member = member;
+	}
 
 	// 4. equals, hashCode 작성
 	@Override
@@ -144,6 +153,8 @@ public class Users implements Serializable {
 		builder.append(boardList);
 		builder.append(", authorities=");
 		builder.append(authorities);
+		builder.append(", member=");
+		builder.append(member);
 		builder.append("]");
 		return builder.toString();
 	}

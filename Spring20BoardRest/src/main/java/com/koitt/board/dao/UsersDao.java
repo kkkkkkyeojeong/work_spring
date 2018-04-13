@@ -39,6 +39,9 @@ public interface UsersDao {
 	
 	// users_authority 테이블 행의 수 가져오기
 	public Integer getCountUsersAuthority() throws UsersException;
+	
+	// 회원 탈퇴시 member 값 변경
+	public void memberUpdate(Users users) throws UsersException;
 }
 
 
