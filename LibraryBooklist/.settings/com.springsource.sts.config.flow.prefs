@@ -1,0 +1,2 @@
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/LibraryBooklist/src/com/book/jobs/job-xml-to-mysql.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph>\r\n<element clazz\="JobModelElement" type\="job">\r\n<structure end\="2007" endstart\="1995" start\="1769" startend\="1799"/>\r\n<bounds height\="118" width\="168" x\="15" y\="17"/>\r\n</element>\r\n</graph>
+eclipse.preferences.version=1
